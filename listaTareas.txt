@@ -1,0 +1,6 @@
+- Terminar el diagrama de activities
+- Pegar al servidor de la cátedra con POSTMAN
+- Crear la autenticación de 2 factores
+- Hacer la funcion de medir temperatura
+- Hacer la funcion de llamar al médico (acelerómetro)
+- Hacer funcion de historial de mediciones (con la consulta al servidor ya que ahí se guardarán las mediciones)
