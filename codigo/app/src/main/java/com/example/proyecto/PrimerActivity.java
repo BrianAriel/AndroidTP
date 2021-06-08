@@ -17,9 +17,10 @@ import android.widget.Toast;
 public class PrimerActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_SEND_SMS = 1;
-    Button botonEnviarMensaje;
-    EditText numeroTelefono;
-    String telefono;
+    Button botonEnviarMensaje, botonEnviarCodigo;
+    EditText numeroTelefono, numeroCodigo;
+    String telefono, codigoRecibido;
+    int codigo = (int) (Math.random() * 1000000);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +28,20 @@ public class PrimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_primer);
 
         botonEnviarMensaje = findViewById(R.id.buttonSMS);
+        botonEnviarCodigo = findViewById(R.id.buttonCodigo);
         numeroTelefono = findViewById(R.id.editTextTelefono);
+        numeroCodigo = findViewById(R.id.editTextCodigo);
 
         botonEnviarMensaje.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 sendSMS();
+            }
+        });
+
+        botonEnviarCodigo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chequearCodigo();
             }
         });
     }
@@ -44,8 +54,9 @@ public class PrimerActivity extends AppCompatActivity {
         }
 
         telefono = numeroTelefono.getText().toString();
-        //smsManager.sendTextMessage(telefono, null, "mensaje de prueba", null, null);
-        numeroTelefono.setText("Imprimo esto para que no gaste credito");
+        //smsManager.sendTextMessage(telefono, null, Integer.toString(codigo), null, null);
+        numeroTelefono.setText(Integer.toString(codigo));
+        botonEnviarCodigo.setVisibility(View.VISIBLE);
     }
 
     protected boolean chequearPermisos() {
@@ -53,6 +64,15 @@ public class PrimerActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_SEND_SMS);
         }
         return ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    protected void chequearCodigo(){
+        codigoRecibido = numeroCodigo.getText().toString();
+        if(codigoRecibido.equals(Integer.toString(codigo))){
+            Toast.makeText(getApplicationContext(), "El codigo es el mismo", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "El codigo no es igual", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
