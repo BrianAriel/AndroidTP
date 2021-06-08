@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Proyecto</string>
+    <string name="factor_de_autenticaci_n">Factor de autenticación</string>
+    <string name="send_sms">SEND SMS</string>
 </resources>
