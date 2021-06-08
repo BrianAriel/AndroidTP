@@ -2,4 +2,5 @@
     <string name="app_name">Proyecto</string>
     <string name="factor_de_autenticaci_n">Factor de autenticación</string>
     <string name="send_sms">SEND SMS</string>
+    <string name="ingrese_su_numero_de_telefono">Ingrese su numero de telefono</string>
 </resources>
