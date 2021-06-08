@@ -1,6 +1,10 @@
 - Terminar el diagrama de activities
 - Pegar al servidor de la cátedra con POSTMAN
 - Crear la autenticación de 2 factores
+  + Ya se envia un SMS a un numero ingresado por el usuario (preguntar si puede hacer esto en vez de enviar al mismo telefono)
+  + Crear la logica para que envie un codigo aleatorio y que luego el usuario lo ingrese y sea lo que reconozca
+  + Pasar lo de main activity a primerActivity
+  + Crear registro y login de usuario
 - Hacer la funcion de medir temperatura
 - Hacer la funcion de llamar al médico (acelerómetro)
 - Hacer funcion de historial de mediciones (con la consulta al servidor ya que ahí se guardarán las mediciones)
