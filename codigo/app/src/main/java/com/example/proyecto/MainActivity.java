@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String MESSAGE_PRIMER_ACTIVITY = "com.example.proyecto.PrimerActivity";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

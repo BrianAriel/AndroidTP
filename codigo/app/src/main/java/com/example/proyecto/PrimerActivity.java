@@ -49,7 +49,7 @@ public class PrimerActivity extends AppCompatActivity {
         });
     }
 
-    protected void sendSMS(){
+    private void sendSMS(){
         SmsManager smsManager = SmsManager.getDefault();
 
         if(!chequearPermisos()) return;
@@ -60,14 +60,14 @@ public class PrimerActivity extends AppCompatActivity {
         botonEnviarCodigo.setVisibility(View.VISIBLE);
     }
 
-    protected boolean chequearPermisos() {
+    private boolean chequearPermisos() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_SEND_SMS);
         }
         return ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
     }
 
-    protected boolean chequearCodigo(){
+    private boolean chequearCodigo(){
         codigoRecibido = numeroCodigo.getText().toString();
         if(codigoRecibido.equals(Integer.toString(codigo))){
             Toast.makeText(getApplicationContext(), "El codigo es el mismo", Toast.LENGTH_LONG).show();
@@ -78,7 +78,7 @@ public class PrimerActivity extends AppCompatActivity {
         }
     }
 
-    protected void lanzarSegundaActivity(){
+    private void lanzarSegundaActivity(){
         Intent intent = new Intent(this, SegundaActivity.class);
         this.startActivity(intent);
     }
