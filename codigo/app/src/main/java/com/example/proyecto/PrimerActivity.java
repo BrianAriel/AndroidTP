@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -41,7 +42,9 @@ public class PrimerActivity extends AppCompatActivity {
         botonEnviarCodigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chequearCodigo();
+                if(chequearCodigo()){
+                    lanzarSegundaActivity();
+                }
             }
         });
     }
@@ -49,9 +52,7 @@ public class PrimerActivity extends AppCompatActivity {
     protected void sendSMS(){
         SmsManager smsManager = SmsManager.getDefault();
 
-        if(!chequearPermisos()) {
-            return;
-        }
+        if(!chequearPermisos()) return;
 
         telefono = numeroTelefono.getText().toString();
         //smsManager.sendTextMessage(telefono, null, Integer.toString(codigo), null, null);
@@ -66,13 +67,20 @@ public class PrimerActivity extends AppCompatActivity {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
     }
 
-    protected void chequearCodigo(){
+    protected boolean chequearCodigo(){
         codigoRecibido = numeroCodigo.getText().toString();
         if(codigoRecibido.equals(Integer.toString(codigo))){
             Toast.makeText(getApplicationContext(), "El codigo es el mismo", Toast.LENGTH_LONG).show();
+            return true;
         } else {
             Toast.makeText(getApplicationContext(), "El codigo no es igual", Toast.LENGTH_LONG).show();
+            return false;
         }
+    }
+
+    protected void lanzarSegundaActivity(){
+        Intent intent = new Intent(this, SegundaActivity.class);
+        this.startActivity(intent);
     }
 
     @Override
