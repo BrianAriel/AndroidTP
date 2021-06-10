@@ -17,14 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SegundaActivity extends AppCompatActivity {
+public class SegundaActivityLogin extends AppCompatActivity {
 
     EditText usuario, contrasenia;
     Button botonIngresar;
     TextView registrarse;
     Boolean resultadoConexion = false;
     ThreadAsyncTask task;
-    Intent intent;
+    Intent intentLogin, intentRegistro;
 
     String stringUsuario = "", stringContrasenia = "";
 
@@ -48,7 +48,19 @@ public class SegundaActivity extends AppCompatActivity {
             }
         });
 
+        registrarse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lanzarActivityRegistro();
+            }
+        });
+
         task = new ThreadAsyncTask();
+    }
+
+    private void lanzarActivityRegistro() {
+        intentRegistro = new Intent(this, SegundaActivityRegistro.class);
+        this.startActivity(intentRegistro);
     }
 
     private class ThreadAsyncTask extends AsyncTask<Void,Void,Boolean> {
@@ -86,11 +98,11 @@ public class SegundaActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            intent = new Intent(this, ServiceHTTPLogin.class);
-            intent.putExtra("uri",uri);
-            intent.putExtra("endpoint",endpoint);
-            intent.putExtra("jsonObject",req.toString());
-            startService(intent);
+            intentLogin = new Intent(this, ServiceHTTPLogin.class);
+            intentLogin.putExtra("uri",uri);
+            intentLogin.putExtra("endpoint",endpoint);
+            intentLogin.putExtra("jsonObject",req.toString());
+            startService(intentLogin);
         } else {
             Toast.makeText(getApplicationContext(), "No existe conexion a internet", Toast.LENGTH_LONG).show();
         }
@@ -118,6 +130,6 @@ public class SegundaActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(intent);
+        stopService(intentLogin);
     }
 }

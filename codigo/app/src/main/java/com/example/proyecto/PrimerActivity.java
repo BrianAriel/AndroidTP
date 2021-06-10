@@ -79,7 +79,7 @@ public class PrimerActivity extends AppCompatActivity {
     }
 
     private void lanzarSegundaActivity(){
-        Intent intent = new Intent(this, SegundaActivity.class);
+        Intent intent = new Intent(this, SegundaActivityLogin.class);
         this.startActivity(intent);
     }
 
