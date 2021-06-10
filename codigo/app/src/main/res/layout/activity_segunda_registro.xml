@@ -51,12 +51,12 @@
         android:layout_marginRight="130dp"
         android:ems="10"
         android:hint="@string/dni"
-        android:inputType="textPersonName"
+        android:importantForAutofill="no"
+        android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/editTextEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextApellido"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextApellido" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -102,12 +102,12 @@
         android:layout_marginRight="133dp"
         android:ems="10"
         android:hint="@string/comision"
-        android:inputType="textPersonName"
+        android:importantForAutofill="no"
+        android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/editTextGrupo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
     <EditText
         android:id="@+id/editTextGrupo"
@@ -120,13 +120,13 @@
         android:layout_marginBottom="68dp"
         android:ems="10"
         android:hint="@string/grupo"
-        android:inputType="textPersonName"
+        android:importantForAutofill="no"
+        android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/buttonRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextComision"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextComision" />
 
     <Button
         android:id="@+id/buttonRegistrarse"

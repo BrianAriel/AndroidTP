@@ -16,7 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SegundaActivityRegistro"></activity>
+        <service
+            android:name=".ServiceHTTPRegistro"
+            android:exported="false"></service>
+
+        <activity android:name=".SegundaActivityRegistro" />
 
         <service
             android:name=".ServiceHTTPRegistrarEvento"

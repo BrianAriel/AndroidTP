@@ -95,14 +95,14 @@ public class SegundaActivityLogin extends AppCompatActivity {
             try {
                 req.put("email",stringUsuario);
                 req.put("password",stringContrasenia);
+                intentLogin = new Intent(this, ServiceHTTPLogin.class);
+                intentLogin.putExtra("uri",uri);
+                intentLogin.putExtra("endpoint",endpoint);
+                intentLogin.putExtra("jsonObject",req.toString());
+                startService(intentLogin);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            intentLogin = new Intent(this, ServiceHTTPLogin.class);
-            intentLogin.putExtra("uri",uri);
-            intentLogin.putExtra("endpoint",endpoint);
-            intentLogin.putExtra("jsonObject",req.toString());
-            startService(intentLogin);
         } else {
             Toast.makeText(getApplicationContext(), "No existe conexion a internet", Toast.LENGTH_LONG).show();
         }
@@ -130,6 +130,7 @@ public class SegundaActivityLogin extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(intentLogin);
+        if(intentLogin != null)
+            stopService(intentLogin);
     }
 }
