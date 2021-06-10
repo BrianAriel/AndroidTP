@@ -16,6 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <service
+            android:name=".ServiceHTTPRegistrarEvento"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".ServiceHTTPLogin"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity android:name=".SegundaActivity" />
         <activity android:name=".PrimerActivity" />
         <activity
