@@ -1,8 +1,9 @@
 package com.example.proyecto;
 
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Intent;
-import android.os.IBinder;
+
+import androidx.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,19 +14,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ServiceHTTPRegistrarEvento extends Service {
+public class ServiceHTTPRegistrarEvento extends IntentService {
+
+    private static final String ETIQUETA = ServiceHTTPRegistrarEvento.class.getSimpleName();
 
     public ServiceHTTPRegistrarEvento() {
+        super(ETIQUETA);
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    protected void onHandleIntent(@Nullable Intent intent) {
         String url = "http://so-unlam.net.ar/api/api/event";
         String access_token = "Bearer " + intent.getStringExtra("access_token");
         try {
@@ -47,6 +45,7 @@ public class ServiceHTTPRegistrarEvento extends Service {
             transmision.flush();
             transmision.close();
 
+            stopSelf();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -54,6 +53,10 @@ public class ServiceHTTPRegistrarEvento extends Service {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

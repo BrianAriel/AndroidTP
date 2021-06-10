@@ -90,8 +90,7 @@ public class SegundaActivity extends AppCompatActivity {
             intent.putExtra("uri",uri);
             intent.putExtra("endpoint",endpoint);
             intent.putExtra("jsonObject",req.toString());
-            startActivity(intent);
-            Toast.makeText(getApplicationContext(), "No exploto todo", Toast.LENGTH_LONG).show();
+            startService(intent);
         } else {
             Toast.makeText(getApplicationContext(), "No existe conexion a internet", Toast.LENGTH_LONG).show();
         }

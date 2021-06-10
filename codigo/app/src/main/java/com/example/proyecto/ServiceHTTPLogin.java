@@ -1,8 +1,11 @@
 package com.example.proyecto;
 
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,22 +17,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ServiceHTTPLogin extends Service {
+public class ServiceHTTPLogin extends IntentService {
 
+    private static final String ETIQUETA = ServiceHTTPLogin.class.getSimpleName();
     JSONObject req;
 
-    public ServiceHTTPLogin() {
+    public ServiceHTTPLogin (){
+        super(ETIQUETA);
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent,flags,startId);
+    protected void onHandleIntent(@Nullable Intent intent) {
         String url = intent.getStringExtra("uri") + intent.getStringExtra("endpoint");
         try {
             URL obj = new URL(url);
@@ -49,17 +47,17 @@ public class ServiceHTTPLogin extends Service {
             transmision.close();
 
             String access_token = parsearResponse(con);
-            if(!access_token.equals("")) {
+            if (!access_token.equals("")) {
                 Intent intentRegistro = new Intent(this, ServiceHTTPRegistrarEvento.class);
                 intentRegistro.putExtra("access_token", access_token);
-                startActivity(intentRegistro);
+                startService(intentRegistro);
             }
+            stopSelf();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return super.onStartCommand(intent, flags, startId);
     }
 
     private String parsearResponse(HttpURLConnection con) {
@@ -73,10 +71,18 @@ public class ServiceHTTPLogin extends Service {
                 sb.append(output);
                 br.close();
                 return sb.toString();
+            } else {
+                Log.i("CODIGO RESPONSE",String.valueOf(con.getResponseCode()));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("FINALIZACION","Finalizando servicio login");
     }
 }
