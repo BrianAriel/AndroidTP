@@ -1,28 +1,32 @@
 package com.example.proyecto;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SegundaActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class SegundaActivityLogin extends AppCompatActivity {
 
     EditText usuario, contrasenia;
     Button botonIngresar;
     TextView registrarse;
     Boolean resultadoConexion = false;
     ThreadAsyncTask task;
+    Intent intentLogin, intentRegistro;
+
+    String stringUsuario = "", stringContrasenia = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +41,26 @@ public class SegundaActivity extends AppCompatActivity {
         botonIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                task.execute();
+                stringUsuario = usuario.getText().toString();
+                stringContrasenia = contrasenia.getText().toString();
+                if(!stringUsuario.equals("") && !stringContrasenia.equals(""))
+                    task.execute();
+            }
+        });
+
+        registrarse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lanzarActivityRegistro();
             }
         });
 
         task = new ThreadAsyncTask();
+    }
+
+    private void lanzarActivityRegistro() {
+        intentRegistro = new Intent(this, SegundaActivityRegistro.class);
+        this.startActivity(intentRegistro);
     }
 
     private class ThreadAsyncTask extends AsyncTask<Void,Void,Boolean> {
@@ -70,8 +89,20 @@ public class SegundaActivity extends AppCompatActivity {
 
     private void enviarPeticion() {
         if(resultadoConexion){
-            Toast.makeText(getApplicationContext(), "Existe conexion a internet", Toast.LENGTH_LONG).show();
-            //Aca deberia enviar la peticion al servidor
+            String uri = "http://so-unlam.net.ar";
+            String endpoint = "/api/api/login";
+            JSONObject req = new JSONObject();
+            try {
+                req.put("email",stringUsuario);
+                req.put("password",stringContrasenia);
+                intentLogin = new Intent(this, ServiceHTTPLogin.class);
+                intentLogin.putExtra("uri",uri);
+                intentLogin.putExtra("endpoint",endpoint);
+                intentLogin.putExtra("jsonObject",req.toString());
+                startService(intentLogin);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         } else {
             Toast.makeText(getApplicationContext(), "No existe conexion a internet", Toast.LENGTH_LONG).show();
         }
@@ -94,5 +125,12 @@ public class SegundaActivity extends AppCompatActivity {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(intentLogin != null)
+            stopService(intentLogin);
     }
 }
