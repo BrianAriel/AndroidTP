@@ -16,9 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ActivityFuncional"></activity>
+
         <service
             android:name=".ServiceHTTPRegistro"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity android:name=".SegundaActivityRegistro" />
 

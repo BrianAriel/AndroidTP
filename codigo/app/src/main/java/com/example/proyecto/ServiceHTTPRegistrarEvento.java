@@ -2,6 +2,8 @@ package com.example.proyecto;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -17,6 +19,7 @@ import java.net.URL;
 public class ServiceHTTPRegistrarEvento extends IntentService {
 
     private static final String ETIQUETA = ServiceHTTPRegistrarEvento.class.getSimpleName();
+    CheckConexion chequeaConexion = new CheckConexion(this);
 
     public ServiceHTTPRegistrarEvento() {
         super(ETIQUETA);
@@ -37,13 +40,23 @@ public class ServiceHTTPRegistrarEvento extends IntentService {
 
             JSONObject req = new JSONObject();
             req.put("env","TEST");
-            req.put("type_events","Registro usuario");
-            req.put("description","Se registra en el servidor la ocurrencia de un login");
+            req.put("type_events","Login usuario");
+            req.put("description","Se registra en el servidor un login de usuario");
 
-            DataOutputStream transmision = new DataOutputStream(con.getOutputStream());
-            transmision.writeBytes(req.toString());
-            transmision.flush();
-            transmision.close();
+            if(chequeaConexion.hayConexion()) {
+                DataOutputStream transmision = new DataOutputStream(con.getOutputStream());
+                transmision.writeBytes(req.toString());
+                transmision.flush();
+                transmision.close();
+            } else {
+                Handler mainHandler = new Handler(getMainLooper());
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "No existe conexion a internet", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
 
             stopSelf();
         } catch (MalformedURLException e) {

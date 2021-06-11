@@ -2,26 +2,25 @@ package com.example.proyecto;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.Context;
-import android.util.Log;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.Buffer;
 
 public class ServiceHTTPRegistro extends IntentService {
 
     private static final String ETIQUETA = ServiceHTTPRegistro.class.getSimpleName();
     JSONObject req;
+    Intent intentLogin;
+    CheckConexion chequeaConexion = new CheckConexion(this);
 
     public ServiceHTTPRegistro(){
         super(ETIQUETA);
@@ -42,39 +41,40 @@ public class ServiceHTTPRegistro extends IntentService {
                 req = new JSONObject(intent.getStringExtra("jsonObject"));
             }
 
-            DataOutputStream transmision = new DataOutputStream(con.getOutputStream());
-            transmision.writeBytes(req.toString());
-            transmision.flush();
-            transmision.close();
+            if(chequeaConexion.hayConexion()) {
+                DataOutputStream transmision = new DataOutputStream(con.getOutputStream());
+                transmision.writeBytes(req.toString());
+                transmision.flush();
+                transmision.close();
 
-            String access_token = parsearResponse(con);
+                if (con.getResponseCode() == 200) {
+                    intentLogin = new Intent(this, SegundaActivityLogin.class);
+                    startActivity(intentLogin);
+                } else {
+                    Handler mainHandler = new Handler(getMainLooper());
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "El registro no fue exitoso", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            } else {
+                Handler mainHandler = new Handler(getMainLooper());
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "No existe conexion a internet", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
             stopSelf();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    private String parsearResponse(HttpURLConnection con) {
-        try {
-            if(con.getResponseCode() == 200){
-                BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream())));
-                StringBuilder sb = new StringBuilder();
-                String output;
-                br.readLine();
-                output = br.readLine();
-                sb.append(output);
-                br.close();
-                Log.i("CODIGO RESPONSE",String.valueOf(con.getResponseCode()));
-                return sb.toString();
-            } else {
-                Log.i("CODIGO RESPONSE",String.valueOf(con.getResponseCode()));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 
     @Override
