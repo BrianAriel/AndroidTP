@@ -1,29 +1,22 @@
 package com.example.proyecto;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SegundaActivityRegistro extends AppCompatActivity {
 
-    EditText nombre, apellido, dni, email, password, comision, grupo;
-    EditText[] vectorCampos = {nombre, apellido, dni, email, password, comision, grupo};
+    EditText[] vectorCampos;
     Button botonRegistro;
     String[] vectorCamposObtenido;
-    Boolean resultadoConexion;
-    ThreadAsyncTask task;
     Intent intentRegistroUsuario;
 
     @Override
@@ -31,6 +24,7 @@ public class SegundaActivityRegistro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_segunda_registro);
 
+        vectorCampos = new EditText[7];
         vectorCamposObtenido = new String[7];
 
         vectorCampos[0] = findViewById(R.id.editTextNombre);
@@ -48,86 +42,46 @@ public class SegundaActivityRegistro extends AppCompatActivity {
             public void onClick(View v) {
                 llenarVectorCamposObtenido();
                 if(chequearCampos()){
-                    task.execute();
+                    enviarPeticion();
                 }
             }
         });
 
-        task = new ThreadAsyncTask();
-    }
-
-    private class ThreadAsyncTask extends AsyncTask<Void,Void,Boolean> {
-
-        @Override
-        protected void onPreExecute() {
-            //...
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            return hayConexion();
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            //...
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            resultadoConexion = aBoolean;
-            enviarPeticion();
-        }
     }
 
     private void enviarPeticion() {
-        if(resultadoConexion){
-            String uri = "http://so-unlam.net.ar";
-            String endpoint = "/api/api/register";
-            JSONObject req = new JSONObject();
-            try {
-                req.put("env","TEST");
-                req.put("name",vectorCamposObtenido[0]);
-                req.put("lastname",vectorCamposObtenido[1]);
-                req.put("dni",Integer.parseInt(vectorCamposObtenido[2]));
-                req.put("email",vectorCamposObtenido[3]);
-                req.put("password",vectorCamposObtenido[4]);
-                req.put("commission",Integer.parseInt(vectorCamposObtenido[5]));
-                req.put("group",Integer.parseInt(vectorCamposObtenido[6]));
-                intentRegistroUsuario = new Intent(this, ServiceHTTPRegistro.class);
-                intentRegistroUsuario.putExtra("uri",uri);
-                intentRegistroUsuario.putExtra("endpoint",endpoint);
-                intentRegistroUsuario.putExtra("jsonObject",req.toString());
-                startService(intentRegistroUsuario);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "No existe conexion a internet", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private boolean hayConexion () {
-        return internetConectado() || redConectado();
-    }
-
-    private boolean redConectado() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    private boolean internetConectado() {
+        String uri = "http://so-unlam.net.ar";
+        String endpoint = "/api/api/register";
+        JSONObject req = new JSONObject();
         try {
-            String command = "ping -c 1 google.com";
-            return (Runtime.getRuntime().exec(command).waitFor() == 0);
-        } catch (Exception e) {
-            return false;
+            req.put("env", "TEST");
+            req.put("name", vectorCamposObtenido[0]);
+            req.put("lastname", vectorCamposObtenido[1]);
+            req.put("dni", Integer.parseInt(vectorCamposObtenido[2]));
+            req.put("email", vectorCamposObtenido[3]);
+            req.put("password", vectorCamposObtenido[4]);
+            req.put("commission", Integer.parseInt(vectorCamposObtenido[5]));
+            req.put("group", Integer.parseInt(vectorCamposObtenido[6]));
+            intentRegistroUsuario = new Intent(this, ServiceHTTPRegistro.class);
+            intentRegistroUsuario.putExtra("uri", uri);
+            intentRegistroUsuario.putExtra("endpoint", endpoint);
+            intentRegistroUsuario.putExtra("jsonObject", req.toString());
+            startService(intentRegistroUsuario);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
     private boolean chequearCampos(){
         int i;
+        if(vectorCamposObtenido[2].length() > 10) {
+            Toast.makeText(getApplicationContext(), "El dni introducido es muy largo", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(!vectorCamposObtenido[3].contains("@")){
+            Toast.makeText(getApplicationContext(), "El email debe tener formato email (incluir @)", Toast.LENGTH_LONG).show();
+            return false;
+        }
         if(vectorCamposObtenido[4].length() < 8) {
             Toast.makeText(getApplicationContext(), "La password debe ser de 8 caracteres o mas", Toast.LENGTH_LONG).show();
             return false;
@@ -149,6 +103,14 @@ public class SegundaActivityRegistro extends AppCompatActivity {
         int i;
         for(i = 0; i < vectorCampos.length; i++){
             vectorCamposObtenido[i] = vectorCampos[i].getText().toString();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(intentRegistroUsuario != null) {
+            stopService(intentRegistroUsuario);
         }
     }
 }

@@ -2,8 +2,8 @@ package com.example.proyecto;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -21,6 +21,8 @@ public class ServiceHTTPLogin extends IntentService {
 
     private static final String ETIQUETA = ServiceHTTPLogin.class.getSimpleName();
     JSONObject req;
+    Intent intentRegistroEvento, intentFuncional;
+    CheckConexion chequeaConexion = new CheckConexion(this);
 
     public ServiceHTTPLogin (){
         super(ETIQUETA);
@@ -41,17 +43,38 @@ public class ServiceHTTPLogin extends IntentService {
                 req = new JSONObject(intent.getStringExtra("jsonObject"));
             }
 
-            DataOutputStream transmision = new DataOutputStream(con.getOutputStream());
-            transmision.writeBytes(req.toString());
-            transmision.flush();
-            transmision.close();
+            if(chequeaConexion.hayConexion()) {
+                DataOutputStream transmision = new DataOutputStream(con.getOutputStream());
+                transmision.writeBytes(req.toString());
+                transmision.flush();
+                transmision.close();
 
-            String access_token = parsearResponse(con);
-            if (!access_token.equals("")) {
-                Intent intentRegistro = new Intent(this, ServiceHTTPRegistrarEvento.class);
-                intentRegistro.putExtra("access_token", access_token);
-                startService(intentRegistro);
+                String access_token = parsearResponse(con);
+                if (!access_token.equals("")) {
+                    intentRegistroEvento = new Intent(this, ServiceHTTPRegistrarEvento.class);
+                    intentRegistroEvento.putExtra("access_token", access_token);
+                    intentFuncional = new Intent(this, ActivityFuncional.class);
+                    startService(intentRegistroEvento);
+                    startActivity(intentFuncional);
+                } else {
+                    Handler mainHandler = new Handler(getMainLooper());
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "El login no fue exitoso", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            } else {
+                Handler mainHandler = new Handler(getMainLooper());
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "No existe conexion a internet", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
+
             stopSelf();
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,8 +94,6 @@ public class ServiceHTTPLogin extends IntentService {
                 sb.append(output);
                 br.close();
                 return sb.toString();
-            } else {
-                Log.i("CODIGO RESPONSE",String.valueOf(con.getResponseCode()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,9 +101,12 @@ public class ServiceHTTPLogin extends IntentService {
         return "";
     }
 
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("FINALIZACION","Finalizando servicio login");
+        if(intentRegistroEvento != null)
+            stopService(intentRegistroEvento);
     }
 }
