@@ -8,11 +8,13 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PrimerActivity extends AppCompatActivity {
@@ -21,6 +23,7 @@ public class PrimerActivity extends AppCompatActivity {
     Button botonEnviarMensaje, botonEnviarCodigo;
     EditText numeroTelefono, numeroCodigo;
     String telefono, codigoRecibido;
+    TextView title;
     int codigo = (int) (Math.random() * 1000000);
 
     @Override
@@ -32,10 +35,20 @@ public class PrimerActivity extends AppCompatActivity {
         botonEnviarCodigo = findViewById(R.id.buttonCodigo);
         numeroTelefono = findViewById(R.id.editTextTelefono);
         numeroCodigo = findViewById(R.id.editTextCodigo);
+        title = (TextView) findViewById(R.id.textViewTitulo);
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Gayathri-Bold.ttf");
+        title.setTypeface(typeface);
 
         botonEnviarMensaje.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                sendSMS();
+                if(numeroTelefono.getText().toString().equals("") || numeroTelefono.getText().toString().equals(null)){
+                    Toast.makeText(getApplicationContext(), "Ingrese un número de teléfono!", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    sendSMS();
+                    lanzarVerificarCodigo();
+                }
             }
         });
 
@@ -53,11 +66,10 @@ public class PrimerActivity extends AppCompatActivity {
         SmsManager smsManager = SmsManager.getDefault();
 
         if(!chequearPermisos()) return;
-
         telefono = numeroTelefono.getText().toString();
         //smsManager.sendTextMessage(telefono, null, Integer.toString(codigo), null, null);
-        numeroTelefono.setText(Integer.toString(codigo));
-        botonEnviarCodigo.setVisibility(View.VISIBLE);
+//        numeroTelefono.setText(Integer.toString(codigo));
+//        botonEnviarCodigo.setVisibility(View.VISIBLE);
     }
 
     private boolean chequearPermisos() {
@@ -80,6 +92,12 @@ public class PrimerActivity extends AppCompatActivity {
 
     private void lanzarSegundaActivity(){
         Intent intent = new Intent(this, SegundaActivityLogin.class);
+        this.startActivity(intent);
+    }
+
+    private void lanzarVerificarCodigo(){
+        Intent intent = new Intent(this, VerificarCodigo.class);
+        intent.putExtra("codigo_verificacion", Integer.toString(codigo));
         this.startActivity(intent);
     }
 

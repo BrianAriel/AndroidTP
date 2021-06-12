@@ -17,6 +17,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ActivityFuncional"></activity>
+        <activity android:name=".VerificarCodigo"></activity>
+        <activity android:name=".MainActivity" />
 
         <service
             android:name=".ServiceHTTPRegistro"
@@ -36,7 +38,7 @@
         <activity android:name=".SegundaActivityLogin" />
         <activity android:name=".PrimerActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashScreen"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,6 +46,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

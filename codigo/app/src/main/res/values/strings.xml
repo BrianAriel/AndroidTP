@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">Proyecto</string>
-    <string name="factor_de_autenticaci_n">Factor de autenticación</string>
-    <string name="send_sms">SEND SMS</string>
-    <string name="ingrese_su_numero_de_telefono">Ingrese su numero de telefono</string>
-    <string name="ingrese_el_codigo">Ingrese el codigo</string>
+    <string name="primerActivityTitle">Bienvenido a Shake4Health!</string>
+    <string name="primerActivitySubtitle">A continuación por favor ingrese su número de celular para confirmar su identidad.</string>
+    <string name="send_sms">ENVIAR CÓDIGO</string>
+    <string name="ingrese_su_numero_de_telefono">Ingrese su número de teléfono</string>
+    <string name="ingrese_el_codigo">Ingrese el código</string>
+    <string name="validar_codigo">Para finalizar con esta validación, por favor ingrese a continuación el código que recibió por SMS</string>
     <string name="send_codigo">SEND CODIGO</string>
     <string name="registrarse">Registrarse</string>
+    <string name="confirmar">CONFIRMAR</string>
+    <string name="reingresar_telefono">CAMBIAR TELÉFONO</string>
     <string name="ingresar">INGRESAR</string>
     <string name="contrase_a">Contraseña</string>
     <string name="title_activity_login">Sign in</string>
