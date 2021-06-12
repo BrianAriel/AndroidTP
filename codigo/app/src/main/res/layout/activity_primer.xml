@@ -28,15 +28,12 @@
         android:id="@+id/buttonSMS"
         android:layout_width="256dp"
         android:layout_height="55dp"
-        android:layout_marginStart="77.5dp"
-        android:layout_marginEnd="77.5dp"
         android:layout_marginBottom="244dp"
         android:background="@drawable/button_background"
         android:text="@string/send_sms"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
