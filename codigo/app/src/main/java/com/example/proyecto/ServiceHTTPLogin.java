@@ -54,6 +54,7 @@ public class ServiceHTTPLogin extends IntentService {
                     intentRegistroEvento = new Intent(this, ServiceHTTPRegistrarEvento.class);
                     intentRegistroEvento.putExtra("access_token", access_token);
                     intentFuncional = new Intent(this, ActivityFuncional.class);
+                    intentFuncional.putExtra("access_token",access_token);
                     startService(intentRegistroEvento);
                     startActivity(intentFuncional);
                 } else {
