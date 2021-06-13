@@ -3,6 +3,7 @@ package com.example.proyecto;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -57,7 +58,7 @@ public class ServiceHTTPRegistrarEvento extends IntentService {
                     }
                 });
             }
-
+            Log.i("CODE RESPONSE",String.valueOf(con.getResponseCode()));
             stopSelf();
         } catch (MalformedURLException e) {
             e.printStackTrace();
