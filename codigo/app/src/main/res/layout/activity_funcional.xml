@@ -6,4 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ActivityFuncional">
 
+    <Button
+        android:id="@+id/buttonTomarTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="506dp"
+        android:layout_marginEnd="113dp"
+        android:layout_marginBottom="178dp"
+        android:text="@string/tomar_temperatura"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="91dp"
+        android:text="@string/historial_de_mediciones"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTomarTemp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

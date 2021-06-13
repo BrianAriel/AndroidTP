@@ -27,4 +27,8 @@
     <string name="email">Email</string>
     <string name="comision">Comision</string>
     <string name="grupo">Grupo</string>
+    <string name="tomar_temperatura">Tomar temperatura</string>
+    <string name="historial_de_mediciones">Historial de mediciones</string>
+    <string name="medir">Medir</string>
+    <string name="para_tomar_la_temperatura_presione_el_bot_n_medir_y_lleve_su_celular_a_la_axila_mantenga_el_celular_all_por_2_minutos_una_vez_pasado_el_tiempo_el_celular_vibrar_indicando_que_la_temperatura_ya_fue_tomada_y_el_celular_se_puede_retirar">Para tomar la temperatura, presione el botón medir y lleve su celular a la axila, mantenga el celular allí por 2 minutos. Una vez pasado el tiempo, el celular vibrará indicando que la temperatura ya fue tomada y el celular se puede retirar</string>
 </resources>
