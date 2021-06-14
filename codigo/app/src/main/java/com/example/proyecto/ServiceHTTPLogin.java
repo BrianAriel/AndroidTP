@@ -75,7 +75,6 @@ public class ServiceHTTPLogin extends IntentService {
                     }
                 });
             }
-
             stopSelf();
         } catch (IOException e) {
             e.printStackTrace();
