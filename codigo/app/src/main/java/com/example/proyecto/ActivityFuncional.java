@@ -10,7 +10,7 @@ import android.widget.Button;
 public class ActivityFuncional extends AppCompatActivity {
     Button botonTomarTemperatura;
     Intent intentTomarTemperatura, intentPrevio, intentService;
-    String access_token;
+    String access_token,refresh_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +19,10 @@ public class ActivityFuncional extends AppCompatActivity {
 
         intentPrevio = getIntent();
         access_token = intentPrevio.getStringExtra("access_token");
+        refresh_token = intentPrevio.getStringExtra("refresh_token");
 
         intentService = new Intent(this,ServiceCheckToken.class);
-        intentService.putExtra("access_token",access_token);
+        intentService.putExtra("refresh_token",refresh_token);
 
         botonTomarTemperatura = findViewById(R.id.buttonTomarTemp);
 
@@ -32,7 +33,7 @@ public class ActivityFuncional extends AppCompatActivity {
             }
         });
 
-        //startService(intentService); Comento el servicio para que no se haga lo del token
+        startService(intentService);
     }
     void lanzarActivityTomarTemperatura(){
         intentTomarTemperatura = new Intent (this,TomarTemperatura.class);

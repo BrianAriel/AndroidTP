@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ServiceHTTPRegistrarEvento extends IntentService {
@@ -58,13 +57,9 @@ public class ServiceHTTPRegistrarEvento extends IntentService {
                     }
                 });
             }
-            Log.i("CODE RESPONSE",String.valueOf(con.getResponseCode()));
+            Log.i("RESPONSE EVENTO",String.valueOf(con.getResponseCode()));
             stopSelf();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
     }

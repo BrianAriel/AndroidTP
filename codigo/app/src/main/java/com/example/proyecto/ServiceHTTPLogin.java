@@ -22,7 +22,9 @@ public class ServiceHTTPLogin extends IntentService {
     private static final String ETIQUETA = ServiceHTTPLogin.class.getSimpleName();
     JSONObject req;
     Intent intentRegistroEvento, intentFuncional;
-    CheckConexion chequeaConexion = new CheckConexion(this);
+    CheckConexion chequeaConexion;
+    String access_token, refresh_token;
+    String[] parsedResponse;
 
     public ServiceHTTPLogin (){
         super(ETIQUETA);
@@ -31,6 +33,7 @@ public class ServiceHTTPLogin extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         String url = intent.getStringExtra("uri") + intent.getStringExtra("endpoint");
+        chequeaConexion = new CheckConexion(this);
         try {
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -49,12 +52,18 @@ public class ServiceHTTPLogin extends IntentService {
                 transmision.flush();
                 transmision.close();
 
-                String access_token = parsearResponse(con);
+                parsedResponse = parsearResponse(con);
+                access_token = parsedResponse[0];
+                refresh_token = parsedResponse[1];
+
                 if (!access_token.equals("")) {
                     intentRegistroEvento = new Intent(this, ServiceHTTPRegistrarEvento.class);
                     intentRegistroEvento.putExtra("access_token", access_token);
+
                     intentFuncional = new Intent(this, ActivityFuncional.class);
                     intentFuncional.putExtra("access_token",access_token);
+                    intentFuncional.putExtra("refresh_token",refresh_token);
+
                     startService(intentRegistroEvento);
                     startActivity(intentFuncional);
                 } else {
@@ -76,32 +85,37 @@ public class ServiceHTTPLogin extends IntentService {
                 });
             }
             stopSelf();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private String parsearResponse(HttpURLConnection con) {
+    private String[] parsearResponse(HttpURLConnection con) {
+        String[] arrayReturn = new String[2];
         try {
             if(con.getResponseCode() == 200){
-                BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream())));
-                StringBuilder sb = new StringBuilder();
-                String output;
-                br.readLine();
-                output = br.readLine();
-                sb.append(output);
-                br.close();
-                return sb.toString();
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                StringBuffer response = new StringBuffer();
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(response.toString());
+                arrayReturn[0] = jsonResponse.getString("token");
+                arrayReturn[1] = jsonResponse.getString("token_refresh");
+                
+                return arrayReturn;
             }
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        return "";
+        arrayReturn[0] = "";
+        arrayReturn[1] = "";
+        return arrayReturn;
     }
-
-
 
     @Override
     public void onDestroy() {
