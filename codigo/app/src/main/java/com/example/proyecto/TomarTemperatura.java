@@ -90,8 +90,8 @@ public class TomarTemperatura extends AppCompatActivity {
 
     }
     private String convertirTemperatura(float medicion){
-        float factorConversion = 40000/15;
-        return String.format("%.02f",(30 + (medicion/factorConversion)));
+        float factorConversion = 5000/15;
+        return String.format("%.02f",(36 + (medicion/factorConversion)));
     }
 
 

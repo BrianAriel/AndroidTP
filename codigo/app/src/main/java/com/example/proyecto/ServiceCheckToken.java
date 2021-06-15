@@ -22,7 +22,7 @@ public class ServiceCheckToken extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         intentRefresh = new Intent(this,ActivityRefresh.class);
-        intentRefresh.putExtra("access_token",intent.getStringExtra("access_token"));
+        intentRefresh.putExtra("refresh_token",intent.getStringExtra("refresh_token"));
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
 
@@ -31,7 +31,7 @@ public class ServiceCheckToken extends IntentService {
             public void run() {
                 iniciarActivity();
             }
-        },5,10, TimeUnit.SECONDS);
+        },30,30, TimeUnit.MINUTES);
     }
 
     private void iniciarActivity() {
