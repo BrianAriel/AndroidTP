@@ -34,4 +34,6 @@
     <string name="text_view_info">Su token de acceso ha expirado. Como quiere proceder?</string>
     <string name="refrescar">Refrescar</string>
     <string name="salir">Salir</string>
+    <string name="archivo_preferences">com.example.proyecto.ARCHIVO_PROYECTO</string>
+    <string name="regresar">REGRESAR</string>
 </resources>

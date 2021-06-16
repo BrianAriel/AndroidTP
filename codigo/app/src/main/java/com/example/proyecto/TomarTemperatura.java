@@ -3,6 +3,7 @@ package com.example.proyecto;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,6 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TomarTemperatura extends AppCompatActivity {
     SensorManager sm;
     SensorEventListener listener;
@@ -25,6 +29,8 @@ public class TomarTemperatura extends AppCompatActivity {
     String temperatura;
     float medicion;
     Vibrator vibrador;
+    SharedPreferences sharedPref;
+    SimpleDateFormat formatter;
 
     Handler h = new Handler() {
         public void handleMessage(Message msg){
@@ -37,6 +43,11 @@ public class TomarTemperatura extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tomar_temperatura);
+
+        formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.archivo_preferences), Context.MODE_PRIVATE);
+
         botonMedir = findViewById(R.id.buttonMedir);
         vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         textTemperatura = findViewById(R.id.textViewTemperatura);
@@ -46,7 +57,7 @@ public class TomarTemperatura extends AppCompatActivity {
 
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+                //...
             }
 
             @Override
@@ -75,6 +86,7 @@ public class TomarTemperatura extends AppCompatActivity {
                             vibrador.vibrate(300);//REVISAR
                             Log.i("Temp registrada: ",temperatura);
                             h.sendEmptyMessage(0);//ejecuto el handler
+                            guardarMedicion(temperatura,new Date(System.currentTimeMillis()));
 
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -84,17 +96,23 @@ public class TomarTemperatura extends AppCompatActivity {
 
                 mySplash.start();//Ejecuto el thread para que tome la temperatura
 
-
             }
         });
 
     }
-    private String convertirTemperatura(float medicion){
-        float factorConversion = 5000/15;
-        return String.format("%.02f",(36 + (medicion/factorConversion)));
+
+    private synchronized void guardarMedicion(String temp, Date date){
+        String fecha = formatter.format(date);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(fecha,"Fecha y hora: " + fecha + " Temperatura: " + temp);
+        editor.apply();
     }
 
-
+    private String convertirTemperatura(float medicion){
+        float factorConversion = 5000/15;
+        String format = String.format("%.02f", (36 + (medicion / factorConversion)));
+        return format;
+    }
 
     @Override
     protected void onPause() {
