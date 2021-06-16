@@ -36,4 +36,5 @@
     <string name="salir">Salir</string>
     <string name="archivo_preferences">com.example.proyecto.ARCHIVO_PROYECTO</string>
     <string name="regresar">REGRESAR</string>
+    <string name="llamar_ayuda">LLAMAR AYUDA</string>
 </resources>
