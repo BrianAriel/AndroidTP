@@ -1,4 +1,10 @@
-- Terminar el diagrama de activities
-- Hacer la funcion de medir temperatura
-- Hacer la funcion de llamar al médico (acelerómetro)
-- Hacer funcion de historial de mediciones (con la consulta al servidor ya que ahí se guardarán las mediciones)
+- Hacer el informe
+- Sacar logs
+- Cambiar numeros magicos por constantes
+- Cambiar TEST por PROD
+- Implementar en el handler de TomarTemperatura:
+  if(temperatura.length() >= 5)
+    textTemperatura.setText(temperatura.substring(0,5));
+  else
+    textTemperatura.setText(temperatura);
+- Mejorar diseño
