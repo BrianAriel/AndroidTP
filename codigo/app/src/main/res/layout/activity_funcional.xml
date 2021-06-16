@@ -33,4 +33,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTomarTemp" />
+
+    <Button
+        android:id="@+id/buttonLlamar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="159dp"
+        android:layout_marginTop="405dp"
+        android:layout_marginEnd="164dp"
+        android:layout_marginBottom="53dp"
+        android:text="@string/llamar_ayuda"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTomarTemp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

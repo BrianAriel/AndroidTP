@@ -103,13 +103,11 @@ public class PrimerActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_SEND_SMS: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "Permiso a enviar SMS otorgado", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText((getApplicationContext()), "Permiso a enviar SMS no otorgado", Toast.LENGTH_LONG).show();
-                }
+        if (requestCode == PERMISSION_REQUEST_SEND_SMS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "Permiso a enviar SMS otorgado", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText((getApplicationContext()), "Permiso a enviar SMS no otorgado", Toast.LENGTH_LONG).show();
             }
         }
     }
