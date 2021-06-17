@@ -1,4 +1,3 @@
-- Hacer el informe
 - Sacar logs
 - Cambiar numeros magicos por constantes
 - Cambiar TEST por PROD
