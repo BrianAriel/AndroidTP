@@ -7,6 +7,7 @@
     <string name="ingrese_el_codigo">Ingrese el código</string>
     <string name="validar_codigo">Para finalizar con esta validación, por favor ingrese a continuación el código que recibió por SMS</string>
     <string name="send_codigo">SEND CODIGO</string>
+    <string name="login">Iniciar Sesión</string>
     <string name="registrarse">Registrarse</string>
     <string name="no_tenes_cuenta">No tenes una cuenta?</string>
     <string name="confirmar">CONFIRMAR</string>
