@@ -49,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:text="@string/confirmar"
+        android:textColor="@android:color/white"
         android:background="@drawable/button_background"
         app:layout_constraintEnd_toEndOf="parent"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

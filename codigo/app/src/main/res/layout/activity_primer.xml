@@ -10,17 +10,13 @@
         android:id="@+id/textViewTitulo"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="85dp"
-        android:layout_marginLeft="85dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="86dp"
-        android:layout_marginRight="86dp"
-        android:paddingHorizontal="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
         android:text="@string/primerActivityTitle"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.627"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,6 +31,7 @@
         android:text="@string/send_sms"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTelefono"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -42,7 +39,7 @@
         android:id="@+id/editTextTelefono"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/ingrese_su_numero_de_telefono"
         android:importantForAutofill="no"
@@ -51,9 +48,8 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonSMS"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitulo"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.131" />
 
     <EditText
@@ -109,12 +105,13 @@
         android:id="@+id/textView"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
         android:text="@string/primerActivitySubtitle"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextTelefono"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.262"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitulo" />
 

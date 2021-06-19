@@ -8,8 +8,9 @@
     <string name="validar_codigo">Para finalizar con esta validación, por favor ingrese a continuación el código que recibió por SMS</string>
     <string name="send_codigo">SEND CODIGO</string>
     <string name="login">Iniciar Sesión</string>
-    <string name="registrarse">Registrarse</string>
-    <string name="no_tenes_cuenta">No tenes una cuenta?</string>
+    <string name="registrarse">REGISTRARSE</string>
+    <string name="registrarse_text">Por favor completa los siguientes datos para crear una cuenta</string>
+    <string name="no_tenes_cuenta">No tenes una cuenta? Registrarse</string>
     <string name="confirmar">CONFIRMAR</string>
     <string name="reingresar_telefono">CAMBIAR TELÉFONO</string>
     <string name="ingresar">INGRESAR</string>
