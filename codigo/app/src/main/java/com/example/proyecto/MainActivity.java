@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     Intent estadoBateria;
     int nivelBateria, escala;
     float porcentajeBateria;
+    private static final int ESCALA = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         estadoBateria = getApplicationContext().registerReceiver(null, intentF);
         nivelBateria = estadoBateria.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         escala = estadoBateria.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-        porcentajeBateria = nivelBateria * 100 / (float)escala;
+        porcentajeBateria = nivelBateria * ESCALA / (float)escala;
         Toast.makeText(getApplicationContext(), "Porcentaje bateria: " + round(porcentajeBateria) + "%", Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(this, SplashScreen.class);

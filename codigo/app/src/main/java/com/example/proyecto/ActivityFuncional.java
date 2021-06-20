@@ -21,7 +21,7 @@ public class ActivityFuncional extends AppCompatActivity {
 
     Button botonTomarTemperatura, botonHistorial, botonLlamar;
     Intent intentTomarTemperatura, intentPrevio, intentService, intentHistorial;
-    String access_token, refresh_token, telEmergencia = "1134934773";
+    String access_token, refresh_token, telEmergencia = "120";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

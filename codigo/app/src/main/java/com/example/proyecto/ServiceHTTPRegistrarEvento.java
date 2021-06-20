@@ -38,7 +38,7 @@ public class ServiceHTTPRegistrarEvento extends IntentService {
             con.setRequestProperty("Authorization",access_token);
 
             JSONObject req = new JSONObject();
-            req.put("env","TEST");
+            req.put("env","PROD");
             req.put("type_events","Login usuario");
             req.put("description","Se registra en el servidor un login de usuario");
 

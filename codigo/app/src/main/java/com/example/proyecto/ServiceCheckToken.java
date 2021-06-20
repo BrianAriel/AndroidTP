@@ -14,7 +14,7 @@ public class ServiceCheckToken extends IntentService {
     private static final String ETIQUETA = ServiceCheckToken.class.getSimpleName();
     ScheduledExecutorService scheduler;
     Intent intentRefresh;
-    private static final int INITIAL_DELAY = 30, PERIOD = 30;
+    private static final int INITIAL_DELAY = 0, PERIOD = 30;
 
     public ServiceCheckToken () {
         super(ETIQUETA);

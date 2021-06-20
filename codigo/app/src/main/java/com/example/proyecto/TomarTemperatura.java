@@ -30,9 +30,9 @@ import java.util.Date;
 
 public class TomarTemperatura extends AppCompatActivity {
     private static final int UMBRAL_AGITACION = 1600, PERMISSION_REQUEST_CALL = 1, MAX_LENGTH = 5, INTERVALO = 100;
-    private static final int SLEEP_TIME = 3000, VIBRATE_TIME = 300, TEMPERATURA_BASE = 36;
+    private static final int SLEEP_TIME = 10000, VIBRATE_TIME = 300, TEMPERATURA_BASE = 36, ESCALA = 10000;
     private static final float UMBRAL_TEMPERATURA = 37.5f, FACTOR_CONVERSION = 5000/15;
-    private static final String TEL_EMERGENCIA = "1134934773";
+    private static final String TEL_EMERGENCIA = "120";
 
     SensorManager smLuz, smAcelerometro;
     SensorEventListener listenerLuz, listenerAcelerometro;
@@ -114,7 +114,7 @@ public class TomarTemperatura extends AppCompatActivity {
                     y = event.values[1];
                     z = event.values[2];
 
-                    float velocidad = Math.abs(x + y + z - ultX - ultY - ultZ) / diferenciaTiempo * 10000;
+                    float velocidad = Math.abs(x + y + z - ultX - ultY - ultZ) / diferenciaTiempo * ESCALA;
 
                     if (velocidad > UMBRAL_AGITACION) {
                         if(chequearSiLlamo()){

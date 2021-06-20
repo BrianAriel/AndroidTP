@@ -56,7 +56,7 @@ public class SegundaActivityRegistro extends AppCompatActivity {
         String endpoint = "/api/api/register";
         JSONObject req = new JSONObject();
         try {
-            req.put("env", "TEST");
+            req.put("env", "PROD");
             req.put("name", vectorCamposObtenido[0]);
             req.put("lastname", vectorCamposObtenido[1]);
             req.put("dni", Integer.parseInt(vectorCamposObtenido[2]));

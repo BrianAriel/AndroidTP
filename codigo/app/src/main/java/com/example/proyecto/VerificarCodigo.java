@@ -20,12 +20,11 @@ public class VerificarCodigo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verificar_codigo);
 
-        numeroCodigo = (EditText) findViewById(R.id.editTextCodigoVerif);
-        confirmBtn = (Button) findViewById(R.id.buttonConfirmCodigo);
-        backBtn = (Button) findViewById(R.id.buttonBackToPhone);
+        numeroCodigo = findViewById(R.id.editTextCodigoVerif);
+        confirmBtn = findViewById(R.id.buttonConfirmCodigo);
+        backBtn = findViewById(R.id.buttonBackToPhone);
 
         codigo = getIntent().getStringExtra("codigo_verificacion");
-        Toast.makeText(getApplicationContext(), "Código de verificación: " + codigo, Toast.LENGTH_LONG).show();
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,11 +49,7 @@ public class VerificarCodigo extends AppCompatActivity {
 
     private boolean chequearCodigo(){
         codigoRecibido = numeroCodigo.getText().toString();
-        if(codigoRecibido.equals(codigo)){
-            return true;
-        } else {
-            return false;
-        }
+        return codigoRecibido.equals(codigo);
     }
 
     private void lanzarSegundaActivity(){

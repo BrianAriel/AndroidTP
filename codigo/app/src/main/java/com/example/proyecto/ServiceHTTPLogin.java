@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.view.ContentInfoCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;

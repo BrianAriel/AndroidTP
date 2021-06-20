@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 public class CheckConexion {
 
     Context contexto;
+    private static final int NETWORK_OK = 0;
 
     public CheckConexion (Context mContext){
         contexto = mContext;
@@ -25,7 +26,7 @@ public class CheckConexion {
     private boolean internetConectado() {
         try {
             String command = "ping -c 1 google.com";
-            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+            return (Runtime.getRuntime().exec(command).waitFor() == NETWORK_OK);
         } catch (Exception e) {
             return false;
         }
