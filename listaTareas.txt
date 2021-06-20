@@ -1,9 +1,0 @@
-- Sacar logs
-- Cambiar numeros magicos por constantes
-- Cambiar TEST por PROD
-- Implementar en el handler de TomarTemperatura:
-  if(temperatura.length() >= 5)
-    textTemperatura.setText(temperatura.substring(0,5));
-  else
-    textTemperatura.setText(temperatura);
-- Mejorar diseño
