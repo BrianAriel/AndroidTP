@@ -32,6 +32,8 @@ public class PrimerActivity extends AppCompatActivity {
         numeroTelefono = findViewById(R.id.editTextTelefono);
         numeroCodigo = findViewById(R.id.editTextCodigo);
 
+        chequearPermisos();
+
         botonEnviarMensaje.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(numeroTelefono.getText().toString().equals("")){

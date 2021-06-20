@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +32,7 @@ import java.util.Date;
 public class TomarTemperatura extends AppCompatActivity {
     private static final int UMBRAL_AGITACION = 1600, PERMISSION_REQUEST_CALL = 1, MAX_LENGTH = 5, INTERVALO = 100;
     private static final int SLEEP_TIME = 10000, VIBRATE_TIME = 300, TEMPERATURA_BASE = 36, ESCALA = 10000;
-    private static final float UMBRAL_TEMPERATURA = 37.5f, FACTOR_CONVERSION = 5000/15;
+    private static final float UMBRAL_TEMPERATURA = 37.5f, FACTOR_CONVERSION = 5000 / 15;
     private static final String TEL_EMERGENCIA = "120";
 
     SensorManager smLuz, smAcelerometro;
@@ -51,13 +52,16 @@ public class TomarTemperatura extends AppCompatActivity {
 
     @SuppressLint("HandlerLeak")
     Handler h = new Handler() {
-        public void handleMessage(Message msg){
-            if(temperatura.length() >= MAX_LENGTH)
-                textTemperatura.setText(temperatura.substring(0,5));
+        public void handleMessage(Message msg) {
+            if (temperatura.length() >= MAX_LENGTH)
+                textTemperatura.setText(temperatura.substring(0, 5));
             else
                 textTemperatura.setText(temperatura);
 
             mostrarResultado();
+            if (Float.parseFloat(temperatura) >= 37.5f) {
+                Toast.makeText(getApplicationContext(), "Temperatura alta! Agite para llamar ayuda", Toast.LENGTH_LONG).show();
+            }
         }
     };
 
@@ -66,7 +70,7 @@ public class TomarTemperatura extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tomar_temperatura);
 
-        formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.archivo_preferences), Context.MODE_PRIVATE);
 
@@ -105,7 +109,7 @@ public class TomarTemperatura extends AppCompatActivity {
             @Override
             public void onSensorChanged(SensorEvent event) {
                 long tiempoActual = System.currentTimeMillis();
-                if((tiempoActual - ultActualizacion) > INTERVALO){
+                if ((tiempoActual - ultActualizacion) > INTERVALO) {
 
                     long diferenciaTiempo = (tiempoActual - ultActualizacion);
                     ultActualizacion = tiempoActual;
@@ -117,7 +121,7 @@ public class TomarTemperatura extends AppCompatActivity {
                     float velocidad = Math.abs(x + y + z - ultX - ultY - ultZ) / diferenciaTiempo * ESCALA;
 
                     if (velocidad > UMBRAL_AGITACION) {
-                        if(chequearSiLlamo()){
+                        if (chequearSiLlamo()) {
                             realizarLlamada();
                         }
                     }
@@ -134,7 +138,7 @@ public class TomarTemperatura extends AppCompatActivity {
         };
         smAcelerometro.registerListener(listenerAcelerometro, acelerometro, SensorManager.SENSOR_DELAY_GAME);
 
-        botonMedir.setOnClickListener(new View.OnClickListener(){
+        botonMedir.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -150,7 +154,7 @@ public class TomarTemperatura extends AppCompatActivity {
                             vibrador.vibrate(VIBRATE_TIME);
 
                             h.sendEmptyMessage(0);//ejecuto el handler
-                            guardarMedicion(temperatura,new Date(System.currentTimeMillis()));
+                            guardarMedicion(temperatura, new Date(System.currentTimeMillis()));
 
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -180,18 +184,18 @@ public class TomarTemperatura extends AppCompatActivity {
     }
 
     //No quiero que temperatura cambie su valor cuando hago el check, en caso de que se agite cuando se registra una nueva temperatura
-    private synchronized boolean chequearSiLlamo(){
-        if(!temperatura.equals("") && Float.parseFloat(temperatura) > UMBRAL_TEMPERATURA){
+    private synchronized boolean chequearSiLlamo() {
+        if (!temperatura.equals("") && Float.parseFloat(temperatura) > UMBRAL_TEMPERATURA) {
             return true;
         }
         return false;
     }
 
-    private void realizarLlamada(){
+    private void realizarLlamada() {
         Intent intentLlamada = new Intent(Intent.ACTION_CALL);
         intentLlamada.setData(Uri.parse("tel:" + TEL_EMERGENCIA));
 
-        if(chequearPermisos()){
+        if (chequearPermisos()) {
             startActivity(intentLlamada);
         }
     }
@@ -203,14 +207,18 @@ public class TomarTemperatura extends AppCompatActivity {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED;
     }
 
-    private synchronized void guardarMedicion(String temp, Date date){
+    private synchronized void guardarMedicion(String temp, Date date) {
         String fecha = formatter.format(date);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(fecha,"Fecha y hora: " + fecha + " Temperatura: " + temp);
+
+        if (temp.length() >= MAX_LENGTH)
+            temp = temp.substring(0, 5);
+
+        editor.putString(fecha, "Fecha y hora: " + fecha + " Temperatura: " + temp);
         editor.apply();
     }
 
-    private String convertirTemperatura(float medicion){
+    private String convertirTemperatura(float medicion) {
         return String.valueOf(TEMPERATURA_BASE + (medicion / FACTOR_CONVERSION));
     }
 
@@ -220,7 +228,7 @@ public class TomarTemperatura extends AppCompatActivity {
         smLuz.unregisterListener(listenerLuz, light);
     }
 
-    private void mostrarResultado(){
+    private void mostrarResultado() {
         textInstruc.setVisibility(View.INVISIBLE);
         imageTermometro.setVisibility(View.INVISIBLE);
         botonMedir.setVisibility(View.INVISIBLE);
@@ -230,7 +238,7 @@ public class TomarTemperatura extends AppCompatActivity {
         botonMedirOtra.setVisibility(View.VISIBLE);
     }
 
-    private void ocultarResultado(){
+    private void ocultarResultado() {
         textInstruc.setVisibility(View.VISIBLE);
         imageTermometro.setVisibility(View.VISIBLE);
         botonMedir.setVisibility(View.VISIBLE);

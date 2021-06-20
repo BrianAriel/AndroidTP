@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Proyecto</string>
+    <string name="app_name">Shake 4 Help</string>
     <string name="primerActivityTitle">Bienvenido a Shake4Health!</string>
     <string name="primerActivitySubtitle">A continuación por favor ingrese su número de celular para confirmar su identidad.</string>
     <string name="send_sms">ENVIAR CÓDIGO</string>
