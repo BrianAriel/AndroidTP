@@ -21,6 +21,7 @@ public class ServiceHTTPRegistro extends IntentService {
     JSONObject req;
     Intent intentLogin;
     CheckConexion chequeaConexion = new CheckConexion(this);
+    private static final int STATUS_SUCCESS = 200;
 
     public ServiceHTTPRegistro(){
         super(ETIQUETA);
@@ -47,7 +48,7 @@ public class ServiceHTTPRegistro extends IntentService {
                 transmision.flush();
                 transmision.close();
 
-                if (con.getResponseCode() == 200) {
+                if (con.getResponseCode() == STATUS_SUCCESS) {
                     intentLogin = new Intent(this, SegundaActivityLogin.class);
                     intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intentLogin);

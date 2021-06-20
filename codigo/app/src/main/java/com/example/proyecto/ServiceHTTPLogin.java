@@ -26,6 +26,7 @@ public class ServiceHTTPLogin extends IntentService {
     CheckConexion chequeaConexion;
     String access_token, refresh_token;
     String[] parsedResponse;
+    private static final int STATUS_SUCCESS = 200;
 
     public ServiceHTTPLogin (){
         super(ETIQUETA);
@@ -96,7 +97,7 @@ public class ServiceHTTPLogin extends IntentService {
     private String[] parsearResponse(HttpURLConnection con) {
         String[] arrayReturn = new String[2];
         try {
-            if(con.getResponseCode() == 200){
+            if(con.getResponseCode() == STATUS_SUCCESS){
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 StringBuffer response = new StringBuffer();
                 String inputLine;

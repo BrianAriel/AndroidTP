@@ -8,6 +8,8 @@ import android.os.Handler;
 
 public class SplashScreen extends AppCompatActivity {
 
+    private static final int SLEEP_TIME = 2500;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +20,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 super.run();
                 try {
-                    sleep(2500);
+                    sleep(SLEEP_TIME);
                     Intent i = new Intent(getApplicationContext(), PrimerActivity.class);
                     startActivity(i);
                     finish();

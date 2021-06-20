@@ -42,7 +42,6 @@ public class ActivityHistorial extends AppCompatActivity {
         botonRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(intentFuncional);
                 finish();
             }
         });

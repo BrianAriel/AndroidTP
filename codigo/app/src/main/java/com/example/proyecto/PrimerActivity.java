@@ -63,8 +63,6 @@ public class PrimerActivity extends AppCompatActivity {
         if(!chequearPermisos()) return;
         telefono = numeroTelefono.getText().toString();
         //smsManager.sendTextMessage(telefono, null, Integer.toString(codigo), null, null);
-//        numeroTelefono.setText(Integer.toString(codigo));
-//        botonEnviarCodigo.setVisibility(View.VISIBLE);
     }
 
     private boolean chequearPermisos() {

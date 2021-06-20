@@ -29,8 +29,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TomarTemperatura extends AppCompatActivity {
-    private static final int UMBRAL_AGITACION = 1600;
-    private static final int PERMISSION_REQUEST_CALL = 1;
+    private static final int UMBRAL_AGITACION = 1600, PERMISSION_REQUEST_CALL = 1, MAX_LENGTH = 5, INTERVALO = 100;
+    private static final int SLEEP_TIME = 3000, VIBRATE_TIME = 300, TEMPERATURA_BASE = 36;
+    private static final float UMBRAL_TEMPERATURA = 37.5f, FACTOR_CONVERSION = 5000/15;
+    private static final String TEL_EMERGENCIA = "1134934773";
 
     SensorManager smLuz, smAcelerometro;
     SensorEventListener listenerLuz, listenerAcelerometro;
@@ -50,7 +52,7 @@ public class TomarTemperatura extends AppCompatActivity {
     @SuppressLint("HandlerLeak")
     Handler h = new Handler() {
         public void handleMessage(Message msg){
-            if(temperatura.length() >= 5)
+            if(temperatura.length() >= MAX_LENGTH)
                 textTemperatura.setText(temperatura.substring(0,5));
             else
                 textTemperatura.setText(temperatura);
@@ -103,7 +105,7 @@ public class TomarTemperatura extends AppCompatActivity {
             @Override
             public void onSensorChanged(SensorEvent event) {
                 long tiempoActual = System.currentTimeMillis();
-                if((tiempoActual - ultActualizacion) > 100){
+                if((tiempoActual - ultActualizacion) > INTERVALO){
 
                     long diferenciaTiempo = (tiempoActual - ultActualizacion);
                     ultActualizacion = tiempoActual;
@@ -143,9 +145,9 @@ public class TomarTemperatura extends AppCompatActivity {
                     public void run() {
                         super.run();
                         try {
-                            sleep(3000);
+                            sleep(SLEEP_TIME);
                             temperatura = convertirTemperatura(medicion);
-                            vibrador.vibrate(300);
+                            vibrador.vibrate(VIBRATE_TIME);
 
                             h.sendEmptyMessage(0);//ejecuto el handler
                             guardarMedicion(temperatura,new Date(System.currentTimeMillis()));
@@ -179,7 +181,7 @@ public class TomarTemperatura extends AppCompatActivity {
 
     //No quiero que temperatura cambie su valor cuando hago el check, en caso de que se agite cuando se registra una nueva temperatura
     private synchronized boolean chequearSiLlamo(){
-        if(!temperatura.equals("") && Float.parseFloat(temperatura) > 37.5f){
+        if(!temperatura.equals("") && Float.parseFloat(temperatura) > UMBRAL_TEMPERATURA){
             return true;
         }
         return false;
@@ -187,7 +189,7 @@ public class TomarTemperatura extends AppCompatActivity {
 
     private void realizarLlamada(){
         Intent intentLlamada = new Intent(Intent.ACTION_CALL);
-        intentLlamada.setData(Uri.parse("tel:1134934773"));
+        intentLlamada.setData(Uri.parse("tel:" + TEL_EMERGENCIA));
 
         if(chequearPermisos()){
             startActivity(intentLlamada);
@@ -209,8 +211,7 @@ public class TomarTemperatura extends AppCompatActivity {
     }
 
     private String convertirTemperatura(float medicion){
-        float factorConversion = 5000/15;
-        return String.valueOf(36 + (medicion / factorConversion));
+        return String.valueOf(TEMPERATURA_BASE + (medicion / FACTOR_CONVERSION));
     }
 
     @Override

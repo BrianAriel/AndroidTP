@@ -21,7 +21,7 @@ public class ActivityFuncional extends AppCompatActivity {
 
     Button botonTomarTemperatura, botonHistorial, botonLlamar;
     Intent intentTomarTemperatura, intentPrevio, intentService, intentHistorial;
-    String access_token, refresh_token;
+    String access_token, refresh_token, telEmergencia = "1134934773";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class ActivityFuncional extends AppCompatActivity {
 
     private void realizarLlamada(){
         Intent intentLlamada = new Intent(Intent.ACTION_CALL);
-        intentLlamada.setData(Uri.parse("tel:1134934773"));
+        intentLlamada.setData(Uri.parse("tel:" + telEmergencia));
 
         if(chequearPermisos()){
             startActivity(intentLlamada);

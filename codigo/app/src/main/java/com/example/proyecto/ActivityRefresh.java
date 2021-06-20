@@ -1,10 +1,10 @@
 package com.example.proyecto;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -27,6 +27,7 @@ public class ActivityRefresh extends AppCompatActivity {
     CheckConexion chequeaConexion;
     String refresh_token, access_token;
     String[] parsedResponse;
+    private static final int STATUS_SUCCESS = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,6 @@ public class ActivityRefresh extends AppCompatActivity {
                     }
                 });
             }
-            Log.i("RESPONSE PUT",String.valueOf(con.getResponseCode()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -127,7 +127,7 @@ public class ActivityRefresh extends AppCompatActivity {
     private String[] parsearResponse(HttpURLConnection con) {
         String[] arrayReturn = new String[2];
         try {
-            if(con.getResponseCode() == 200){
+            if(con.getResponseCode() == STATUS_SUCCESS){
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 StringBuffer response = new StringBuffer();
                 String inputLine;

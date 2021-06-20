@@ -18,6 +18,8 @@ public class SegundaActivityRegistro extends AppCompatActivity {
     Button botonRegistro;
     String[] vectorCamposObtenido;
     Intent intentRegistroUsuario;
+    private static final int MAX_DNI = 10, MIN_PASSWORD = 8;
+    private static final String COM_MARTES = "2900", COM_MIERCOLES = "3900";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,7 @@ public class SegundaActivityRegistro extends AppCompatActivity {
 
     private boolean chequearCampos(){
         int i;
-        if(vectorCamposObtenido[2].length() > 10) {
+        if(vectorCamposObtenido[2].length() > MAX_DNI) {
             Toast.makeText(getApplicationContext(), "El dni introducido es muy largo", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -82,11 +84,11 @@ public class SegundaActivityRegistro extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "El email debe tener formato email (incluir @)", Toast.LENGTH_LONG).show();
             return false;
         }
-        if(vectorCamposObtenido[4].length() < 8) {
+        if(vectorCamposObtenido[4].length() < MIN_PASSWORD) {
             Toast.makeText(getApplicationContext(), "La password debe ser de 8 caracteres o mas", Toast.LENGTH_LONG).show();
             return false;
         }
-        if(!vectorCamposObtenido[5].equals("2900") && !vectorCamposObtenido[5].equals("3900")){
+        if(!vectorCamposObtenido[5].equals(COM_MARTES) && !vectorCamposObtenido[5].equals(COM_MIERCOLES)){
             Toast.makeText(getApplicationContext(), "La comision solo puede ser 2900(Martes) o 3900(Miercoles)", Toast.LENGTH_LONG).show();
             return false;
         }
