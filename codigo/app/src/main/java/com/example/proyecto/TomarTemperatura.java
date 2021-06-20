@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -34,8 +36,9 @@ public class TomarTemperatura extends AppCompatActivity {
     SensorEventListener listenerLuz, listenerAcelerometro;
     Sensor light, acelerometro;
 
-    Button botonMedir;
-    TextView textTemperatura;
+    Button botonMedir, botonRegresar, botonMedirOtra;
+    TextView textTemperatura, textInstruc;
+    ImageView imageTermometro, imageResult;
     String temperatura = "";
 
     float medicion, x, y, z, ultX, ultY, ultZ;
@@ -44,9 +47,15 @@ public class TomarTemperatura extends AppCompatActivity {
     SharedPreferences sharedPref;
     SimpleDateFormat formatter;
 
+    @SuppressLint("HandlerLeak")
     Handler h = new Handler() {
         public void handleMessage(Message msg){
-            textTemperatura.setText(temperatura.substring(0,5));
+            if(temperatura.length() >= 5)
+                textTemperatura.setText(temperatura.substring(0,5));
+            else
+                textTemperatura.setText(temperatura);
+
+            mostrarResultado();
         }
     };
 
@@ -61,7 +70,13 @@ public class TomarTemperatura extends AppCompatActivity {
 
         vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         botonMedir = findViewById(R.id.buttonMedir);
+        botonRegresar = findViewById(R.id.buttonRegresar);
+        botonMedirOtra = findViewById(R.id.buttonMedirOtra);
         textTemperatura = findViewById(R.id.textViewTemperatura);
+        textInstruc = findViewById(R.id.textInstruc);
+        imageTermometro = findViewById(R.id.imageTermometro);
+        imageResult = findViewById(R.id.imageResult);
+
 
         smLuz = (SensorManager) getSystemService(SENSOR_SERVICE);
         light = smLuz.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -146,6 +161,20 @@ public class TomarTemperatura extends AppCompatActivity {
             }
         });
 
+        botonRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        botonMedirOtra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ocultarResultado();
+            }
+        });
+
     }
 
     //No quiero que temperatura cambie su valor cuando hago el check, en caso de que se agite cuando se registra una nueva temperatura
@@ -188,5 +217,25 @@ public class TomarTemperatura extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         smLuz.unregisterListener(listenerLuz, light);
+    }
+
+    private void mostrarResultado(){
+        textInstruc.setVisibility(View.INVISIBLE);
+        imageTermometro.setVisibility(View.INVISIBLE);
+        botonMedir.setVisibility(View.INVISIBLE);
+
+        imageResult.setVisibility(View.VISIBLE);
+        textTemperatura.setVisibility(View.VISIBLE);
+        botonMedirOtra.setVisibility(View.VISIBLE);
+    }
+
+    private void ocultarResultado(){
+        textInstruc.setVisibility(View.VISIBLE);
+        imageTermometro.setVisibility(View.VISIBLE);
+        botonMedir.setVisibility(View.VISIBLE);
+
+        imageResult.setVisibility(View.INVISIBLE);
+        textTemperatura.setVisibility(View.INVISIBLE);
+        botonMedirOtra.setVisibility(View.INVISIBLE);
     }
 }

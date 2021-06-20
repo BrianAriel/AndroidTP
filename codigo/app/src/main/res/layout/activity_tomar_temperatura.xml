@@ -6,47 +6,124 @@
     android:layout_height="match_parent"
     tools:context=".TomarTemperatura">
 
+    <ImageView
+        android:id="@+id/imageResult"
+        android:layout_width="189dp"
+        android:layout_height="318dp"
+        android:layout_marginTop="24dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textInstruc"
+        app:srcCompat="@drawable/termometro_blue" />
+
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="324dp"
-        android:layout_height="255dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="110dp"
+        android:id="@+id/textInstruc"
+        android:layout_width="match_parent"
+        android:layout_height="198dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
         android:text="@string/para_tomar_la_temperatura_presione_el_bot_n_medir_y_lleve_su_celular_a_la_axila_mantenga_el_celular_all_por_2_minutos_una_vez_pasado_el_tiempo_el_celular_vibrar_indicando_que_la_temperatura_ya_fue_tomada_y_el_celular_se_puede_retirar"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonMedir"
+        android:textSize="20sp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-    <Button
-        android:id="@+id/buttonMedir"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonMedirOtra"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="214dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="92dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/button_background_secondary"
+        android:text="@string/medir_otra"
+        android:visibility="invisible"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageTermometro" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonMedir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/button_background_secondary"
         android:text="@string/medir"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageTermometro" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonRegresar"
+        style="@style/Widget.App.ButtonStyle.Green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/button_background"
+        android:text="@string/regresar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonMedirOtra"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textViewTemperatura"
         android:layout_width="85dp"
         android:layout_height="57dp"
-        android:layout_marginStart="163dp"
-        android:layout_marginTop="164dp"
-        android:layout_marginEnd="163dp"
-        android:layout_marginBottom="103dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonMedir"
+        android:visibility="invisible"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageTermometro"
+        app:layout_constraintEnd_toEndOf="@+id/imageResult"
+        app:layout_constraintStart_toStartOf="@+id/imageResult"
+        app:layout_constraintTop_toTopOf="@+id/imageResult"
+        app:layout_constraintVertical_bias="0.815" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/gayathri_bold"
+        android:textSize="32sp"
+        android:text="@string/tomar_temperatura"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageTermometro"
+        android:layout_width="125dp"
+        android:layout_height="116dp"
+        android:layout_marginTop="12dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInstruc"
+        app:srcCompat="@drawable/termometro_rounded" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

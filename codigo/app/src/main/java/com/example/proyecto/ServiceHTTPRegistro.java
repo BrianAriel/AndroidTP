@@ -49,6 +49,7 @@ public class ServiceHTTPRegistro extends IntentService {
 
                 if (con.getResponseCode() == 200) {
                     intentLogin = new Intent(this, SegundaActivityLogin.class);
+                    intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intentLogin);
                 } else {
                     Handler mainHandler = new Handler(getMainLooper());

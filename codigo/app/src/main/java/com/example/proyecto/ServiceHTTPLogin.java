@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.view.ContentInfoCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +64,8 @@ public class ServiceHTTPLogin extends IntentService {
                     intentFuncional = new Intent(this, ActivityFuncional.class);
                     intentFuncional.putExtra("access_token",access_token);
                     intentFuncional.putExtra("refresh_token",refresh_token);
+
+                    intentFuncional.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                     startService(intentRegistroEvento);
                     startActivity(intentFuncional);

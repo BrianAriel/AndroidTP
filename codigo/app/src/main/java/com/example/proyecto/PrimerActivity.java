@@ -23,7 +23,6 @@ public class PrimerActivity extends AppCompatActivity {
     Button botonEnviarMensaje, botonEnviarCodigo;
     EditText numeroTelefono, numeroCodigo;
     String telefono, codigoRecibido;
-    TextView title;
     int codigo = (int) (Math.random() * 1000000);
 
     @Override
@@ -35,10 +34,6 @@ public class PrimerActivity extends AppCompatActivity {
         botonEnviarCodigo = findViewById(R.id.buttonCodigo);
         numeroTelefono = findViewById(R.id.editTextTelefono);
         numeroCodigo = findViewById(R.id.editTextCodigo);
-        title = (TextView) findViewById(R.id.textViewTitulo);
-
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Gayathri-Bold.ttf");
-        title.setTypeface(typeface);
 
         botonEnviarMensaje.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

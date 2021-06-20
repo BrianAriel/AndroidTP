@@ -20,6 +20,9 @@
     <color name="secondaryTextColor">#082B6A</color>
 
     <color name="textMuted">#444444</color>
+    <color name="colorRed">#cc0000</color>
+    <color name="colorBlue">#3D62A6</color>
+    <color name="colorGray">#A5A5A5</color>
 
 <!--    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#cc0000</color>-->
 </resources>

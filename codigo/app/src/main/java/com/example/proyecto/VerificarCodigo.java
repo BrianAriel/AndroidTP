@@ -51,10 +51,8 @@ public class VerificarCodigo extends AppCompatActivity {
     private boolean chequearCodigo(){
         codigoRecibido = numeroCodigo.getText().toString();
         if(codigoRecibido.equals(codigo)){
-            Toast.makeText(getApplicationContext(), "El codigo es el mismo", Toast.LENGTH_LONG).show();
             return true;
         } else {
-            Toast.makeText(getApplicationContext(), "El codigo no es igual", Toast.LENGTH_LONG).show();
             return false;
         }
     }

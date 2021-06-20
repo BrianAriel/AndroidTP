@@ -12,5 +12,40 @@
         <item name="android:background" tools:overwrite="true">#3D62A6</item>
     </style>
 
+    <style name="Widget.App.ButtonStyle.Red"
+        parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/RedButtonThemeOverlay</item>
+    </style>
+
+    <style name="RedButtonThemeOverlay">
+        <item name="colorPrimary">@color/colorRed</item>
+    </style>
+
+    <style name="Widget.App.ButtonStyle.Blue"
+        parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/BlueButtonThemeOverlay</item>
+    </style>
+
+    <style name="BlueButtonThemeOverlay">
+        <item name="colorPrimary">@color/colorBlue</item>
+    </style>
+
+    <style name="Widget.App.ButtonStyle.Green"
+        parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/GreenButtonThemeOverlay</item>
+    </style>
+
+    <style name="GreenButtonThemeOverlay">
+        <item name="colorPrimary">@color/primaryDarkColor</item>
+    </style>
+
+    <style name="Widget.App.ButtonStyle.Gray"
+        parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/GrayButtonThemeOverlay</item>
+    </style>
+
+    <style name="GrayButtonThemeOverlay">
+        <item name="colorPrimary">@color/colorGray</item>
+    </style>
 
 </resources>

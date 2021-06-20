@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBackToPhone"
         app:layout_constraintVertical_bias="0.947"
         app:srcCompat="@drawable/logo" />
 
@@ -33,13 +33,12 @@
         android:id="@+id/editTextCodigoVerif"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
+        android:hint="@string/ingrese_el_codigo"
         android:inputType="number"
         android:textSize="20dp"
-        android:hint="@string/ingrese_el_codigo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -47,13 +46,12 @@
         android:id="@+id/buttonConfirmCodigo"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:text="@string/confirmar"
-        android:textColor="@android:color/white"
+        android:layout_marginTop="64dp"
         android:background="@drawable/button_background"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/confirmar"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCodigoVerif" />
 
@@ -61,13 +59,12 @@
         android:id="@+id/buttonBackToPhone"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/button_background_secondary"
         android:text="@string/reingresar_telefono"
-        android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonConfirmCodigo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

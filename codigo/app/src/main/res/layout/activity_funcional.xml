@@ -6,45 +6,82 @@
     android:layout_height="match_parent"
     tools:context=".ActivityFuncional">
 
-    <Button
-        android:id="@+id/buttonTomarTemp"
+    <ImageView
+        android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="506dp"
-        android:layout_marginEnd="113dp"
-        android:layout_marginBottom="178dp"
-        android:text="@string/tomar_temperatura"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/background" />
 
-    <Button
-        android:id="@+id/buttonHistorial"
-        android:layout_width="wrap_content"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonTomarTemp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="91dp"
-        android:text="@string/historial_de_mediciones"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginTop="24dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_background_secondary"
+        style="@style/Widget.App.ButtonStyle.Blue"
+        app:icon="@drawable/round_thermostat_black_24"
+        android:text="@string/tomar_temperatura"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLlamar" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonHistorial"
+        style="@style/Widget.App.ButtonStyle.Green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="55dp"
+        android:background="@drawable/button_background"
+        android:text="@string/historial_de_mediciones"
+        android:textColor="@android:color/white"
+        app:icon="@drawable/round_history_white_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTomarTemp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLlamar"
-        android:layout_width="wrap_content"
+        app:icon="@drawable/round_error_outline_24"
         android:layout_height="wrap_content"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="405dp"
-        android:layout_marginEnd="164dp"
-        android:layout_marginBottom="53dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="204dp"
+        android:background="@drawable/button_background_red"
+        style="@style/Widget.App.ButtonStyle.Red"
         android:text="@string/llamar_ayuda"
-        app:layout_constraintBottom_toTopOf="@+id/buttonTomarTemp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewMenu"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="116dp"
+        android:fontFamily="@font/gayathri_regular"
+        android:text="@string/menu"
+        android:textColor="@android:color/primary_text_dark"
+        android:textSize="26sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
 </androidx.constraintlayout.widget.ConstraintLayout>
