@@ -31,11 +31,11 @@ public class ServiceHTTPRegistrarEvento extends IntentService {
         try {
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            con.setRequestProperty("Authorization",access_token);
             con.setDoInput(true);
             con.setDoOutput(true);
             con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            con.setRequestProperty("Authorization",access_token);
             con.setConnectTimeout(5000);
 
             JSONObject req = new JSONObject();
