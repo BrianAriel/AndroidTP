@@ -34,8 +34,9 @@ public class ServiceHTTPRegistrarEvento extends IntentService {
             con.setDoInput(true);
             con.setDoOutput(true);
             con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/json; utf-8");
+            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             con.setRequestProperty("Authorization",access_token);
+            con.setConnectTimeout(5000);
 
             JSONObject req = new JSONObject();
             req.put("env","PROD");
@@ -44,8 +45,11 @@ public class ServiceHTTPRegistrarEvento extends IntentService {
 
             if(chequeaConexion.hayConexion()) {
                 DataOutputStream transmision = new DataOutputStream(con.getOutputStream());
-                transmision.writeBytes(req.toString());
+                transmision.write(req.toString().getBytes("UTF-8"));
                 transmision.flush();
+
+                con.connect();
+                int responseCode = con.getResponseCode();
                 transmision.close();
             } else {
                 Handler mainHandler = new Handler(getMainLooper());
